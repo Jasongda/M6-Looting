@@ -1,7 +1,12 @@
 extends Area2D
+@export var possible_items: Array[PackedScene] = []
 
 @onready var canvas_group: CanvasGroup = $CanvasGroup
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+func open() -> void:
+	animation_player.play("open")
+	input_pickable = false
 
 func _ready() -> void:
 	canvas_group.material.set_shader_parameter("line_thickness", 3.0)
@@ -19,3 +24,13 @@ func _on_mouse_exited() -> void:
 	
 func set_outline_thickness(new_thickness: float) -> void:
 	canvas_group.material.set_shader_parameter("line_thickness", new_thickness)
+
+func _input_event(_viewport: Viewport, event: InputEvent, _shape_index: int):
+	var _event_is_mouse_click: bool = (
+		event is InputEventMouseButton and 
+		event.button_index == MOUSE_BUTTON_LEFT and 
+		event.is_pressed()
+		)
+
+	if _event_is_mouse_click:
+		open()

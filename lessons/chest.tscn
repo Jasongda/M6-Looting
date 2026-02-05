@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c411x3u48jewu"]
+[gd_scene load_steps=11 format=3 uid="uid://c411x3u48jewu"]
 
 [ext_resource type="Texture2D" uid="uid://c3hwsm5ugp8qw" path="res://lessons/chest/bottom.png" id="1_6tqqv"]
 [ext_resource type="Shader" uid="uid://lio2wmbue2of" path="res://lessons/chest/group_outline.gdshader" id="1_ewavt"]
@@ -8,6 +8,42 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bv3sb"]
 size = Vector2(96, 80)
+
+[sub_resource type="Animation" id="Animation_12as2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup/Top:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, -2)]
+}
+
+[sub_resource type="Animation" id="Animation_bkc6q"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup/Top:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(3, -2), Vector2(49, -61), Vector2(108, 39)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_65g6b"]
+_data = {
+&"RESET": SubResource("Animation_12as2"),
+&"open": SubResource("Animation_bkc6q")
+}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p5k37"]
 resource_local_to_scene = true
@@ -23,6 +59,11 @@ script = ExtResource("1_p5k37")
 position = Vector2(3, 7)
 shape = SubResource("RectangleShape2D_bv3sb")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_65g6b")
+}
+
 [node name="CanvasGroup" type="CanvasGroup" parent="."]
 material = SubResource("ShaderMaterial_p5k37")
 position = Vector2(3, 12)
@@ -31,7 +72,7 @@ position = Vector2(3, 12)
 texture = ExtResource("1_6tqqv")
 
 [node name="Top" type="Sprite2D" parent="CanvasGroup"]
-position = Vector2(0, -14)
+position = Vector2(3, -2)
 texture = ExtResource("2_ewavt")
 
 [node name="Lock" type="Sprite2D" parent="CanvasGroup"]
