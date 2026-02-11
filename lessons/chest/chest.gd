@@ -45,4 +45,18 @@ func _spawn_random_item() -> void:
 	var _random_angle := randf_range(0.0, 2 * PI)
 	var _random_direction := Vector2(1.0, 0.0).rotated(_random_angle)
 	var _random_distance := randf_range(60.0, 120.0)
-	_loot_item.position = _random_direction * _random_distance
+	var _land_position := _random_direction * _random_distance
+	const _FLIGHT_TIME := 0.4
+	const _HALF_FLIGHT_TIME := _FLIGHT_TIME / 2.0
+	var _tween := create_tween()
+	_tween.set_parallel()
+	_loot_item.scale = Vector2(0.25, 0.25)
+	_tween.tween_property(_loot_item, "scale", Vector2(1.0, 1.0), _HALF_FLIGHT_TIME)
+	_tween.tween_property(_loot_item, "position:x", _land_position.x, _FLIGHT_TIME)
+	_tween = create_tween()
+	_tween.set_trans(Tween.TRANS_QUAD)
+	_tween.set_ease(Tween.EASE_OUT)
+	var _jump_height := randf_range(30.0, 80.0)
+	_tween.tween_property(_loot_item, "position:y", _land_position.y - _jump_height, _HALF_FLIGHT_TIME)
+	_tween.set_ease(Tween.EASE_IN)
+	_tween.tween_property(_loot_item, "position:y", _land_position.y, _HALF_FLIGHT_TIME)

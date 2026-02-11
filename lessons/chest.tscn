@@ -80,5 +80,5 @@ position = Vector2(3, -2)
 texture = ExtResource("2_ewavt")
 
 [node name="Lock" type="Sprite2D" parent="CanvasGroup"]
-position = Vector2(-2, 7)
+position = Vector2(0, 6)
 texture = ExtResource("3_p5k37")
