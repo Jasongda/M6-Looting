@@ -18,4 +18,12 @@ func play_floating_animation() -> void:
 	tween.tween_property(sprite_2d, "position", position_offset, duration)
 	tween.tween_property(sprite_2d, "position",  -1.0 * position_offset, duration)
 
-
+func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		print("The Condition is True")
+		collect()
+		
+func collect() -> void:
+	var _tween := create_tween()
+	_tween.tween_property(self, "scale", Vector2(0, 0), 0.3 )
+	_tween.finished.connect(queue_free)
